@@ -1,65 +1,216 @@
 {
 	"info": {
-		"name": "CoffeeDrop",
-		"_postman_id": "df15e329-169f-df36-623d-78cd2cdc1350",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	  "name": "CoffeeDrop",
+	  "_postman_id": "df15e329-169f-df36-623d-78cd2cdc1350",
+	  "description": "API collection for CoffeeDrop application",
+	  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "GetNearestLocation",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": ""
-				},
-				"description": "Returns the address and opening times of the nearest CoffeeDrop location"
+	  {
+		"name": "Register User",
+		"request": {
+		  "method": "POST",
+		  "header": [
+			{
+			  "key": "Content-Type",
+			  "value": "application/json"
 			},
-			"response": []
+			{
+			  "key": "Accept",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {
+			"mode": "raw",
+			"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+		  },
+		  "url": {
+			"raw": "{{base_url}}/api/register",
+			"host": ["{{base_url}}"],
+			"path": ["api", "register"]
+		  },
+		  "description": "Register a new user"
 		},
-		{
-			"name": "CreateNewLocation",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n      \"postcode\": \"CV313PP\",\n      \"opening_times\": {\"monday\" : \"09:00\", \"tuesday\" : \"09:00\", \"saturday\" : \"08:30\"},\n      \"closing_times\": {\"monday\" : \"19:00\", \"tuesday\" : \"19:00\", \"saturday\" : \"18:30\"}\n}\n\n"
-				},
-				"url": {
-					"raw": ""
-				},
-				"description": ""
+		"response": []
+	  },
+	  {
+		"name": "Login User",
+		"request": {
+		  "method": "POST",
+		  "header": [
+			{
+			  "key": "Content-Type",
+			  "value": "application/json"
 			},
-			"response": []
+			{
+			  "key": "Accept",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {
+			"mode": "raw",
+			"raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
+		  },
+		  "url": {
+			"raw": "{{base_url}}/api/login",
+			"host": ["{{base_url}}"],
+			"path": ["api", "login"]
+		  },
+		  "description": "Login an existing user"
 		},
-		{
-			"name": "CalculateCashback",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n      \"Ristretto\": 10,\n      \"Espresso\": 100,\n      \"Lungo\":30\n}\n\n"
-				},
-				"url": {
-					"raw": ""
-				},
-				"description": ""
+		"response": []
+	  },
+	  {
+		"name": "Get Nearest Location",
+		"request": {
+		  "method": "GET",
+		  "header": [
+			{
+			  "key": "Authorization",
+			  "value": "Bearer {{auth_token}}"
 			},
-			"response": []
-		}
+			{
+			  "key": "Accept",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {},
+		  "url": {
+			"raw": "{{base_url}}/api/nearest-location?postcode=CV313PP",
+			"host": ["{{base_url}}"],
+			"path": ["api", "nearest-location"],
+			"query": [
+			  {
+				"key": "postcode",
+				"value": "CV313PP"
+			  }
+			]
+		  },
+		  "description": "Get the nearest CoffeeDrop location based on postcode"
+		},
+		"response": []
+	  },
+	  {
+		"name": "Create New Location",
+		"request": {
+		  "method": "POST",
+		  "header": [
+			{
+			  "key": "Content-Type",
+			  "value": "application/json"
+			},
+			{
+			  "key": "Authorization",
+			  "value": "Bearer {{auth_token}}"
+			},
+			{
+			  "key": "Accept",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {
+			"mode": "raw",
+			          "raw": "{\n  \"postcode\": \"CV313PP\",\n  \"opening_times\": \"{\\\"monday\\\": \\\"09:00\\\", \\\"tuesday\\\": \\\"09:00\\\", \\\"saturday\\\": \\\"08:30\\\"}\",\n  \"closing_times\": \"{\\\"monday\\\": \\\"19:00\\\", \\\"tuesday\\\": \\\"19:00\\\", \\\"saturday\\\": \\\"18:30\\\"}\"\n}"
+		  },
+		  "url": {
+			"raw": "{{base_url}}/api/new-location",
+			"host": ["{{base_url}}"],
+			"path": ["api", "new-location"]
+		  },
+		  "description": "Create a new CoffeeDrop location"
+		},
+		"response": []
+	  },
+	  {
+		"name": "Calculate Cashback",
+		"request": {
+		  "method": "POST",
+		  "header": [
+			{
+			  "key": "Content-Type",
+			  "value": "application/json"
+			},
+			{
+			  "key": "Authorization",
+			  "value": "Bearer {{auth_token}}"
+			},
+			{
+			  "key": "Accept",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {
+			"mode": "raw",
+			"raw": "{\n  \"Ristretto\": 10,\n  \"Espresso\": 100,\n  \"Lungo\": 30\n}"
+		  },
+		  "url": {
+			"raw": "{{base_url}}/api/calculate-cashback",
+			"host": ["{{base_url}}"],
+			"path": ["api", "calculate-cashback"]
+		  },
+		  "description": "Calculate cashback based on coffee purchases"
+		},
+		"response": []
+	  },
+	  {
+		"name": "Get Calculation History",
+		"request": {
+		  "method": "GET",
+		  "header": [
+			{
+			  "key": "Authorization",
+			  "value": "Bearer {{auth_token}}"
+			},
+			{
+			  "key": "Accept",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {},
+		  "url": {
+			"raw": "{{base_url}}/api/calculation-history",
+			"host": ["{{base_url}}"],
+			"path": ["api", "calculation-history"]
+		  },
+		  "description": "Get the last 5 cashback calculations"
+		},
+		"response": []
+	  },
+	  {
+		"name": "Logout User",
+		"request": {
+		  "method": "POST",
+		  "header": [
+			{
+			  "key": "Authorization",
+			  "value": "Bearer {{auth_token}}"
+			},
+			{
+			  "key": "Accept",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {},
+		  "url": {
+			"raw": "{{base_url}}/api/logout",
+			"host": ["{{base_url}}"],
+			"path": ["api", "logout"]
+		  },
+		  "description": "Logout the authenticated user"
+		},
+		"response": []
+	  }
+	],
+	"variable": [
+	  {
+		"key": "base_url",
+		"value": "http://localhost:8000",
+		"description": "Base URL for the API"
+	  },
+	  {
+		"key": "auth_token",
+		"value": "",
+		"description": "Authentication token obtained after login"
+	  }
 	]
-}
+  }
