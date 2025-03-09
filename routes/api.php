@@ -4,21 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CashbackController;
+use App\Http\Controllers\AuthController;
 
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-
-Route::middleware('api')->group(function () {
-    Route::get('/nearest-location', [LocationController::class, 'getNearestLocation']);
-    Route::post('/new-location', [LocationController::class, 'createNewLocation']);
-    Route::post('/calculate-cashback', [CashbackController::class, 'calculateCashback']);
-    Route::get('/calculation-history', [CashbackController::class, 'calculationHistory']);
-});
-
-
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/test', function (Request $request) {
     return response()->json([
@@ -28,4 +18,19 @@ Route::get('/test', function (Request $request) {
             'example' => 'This is an example response.',
         ],
     ]);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/logout', [AuthController::class, 'logout']);
+    
+    //Location routes
+    Route::get('/nearest-location', [LocationController::class, 'getNearestLocation']);
+    Route::post('/new-location', [LocationController::class, 'createNewLocation']);
+    
+    //Cashback routes
+    Route::post('/calculate-cashback', [CashbackController::class, 'calculateCashback']);
+    Route::get('/calculation-history', [CashbackController::class, 'calculationHistory']);
 });
